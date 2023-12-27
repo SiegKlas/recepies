@@ -52,7 +52,7 @@ public class SecurityConfig {
                         (authz) -> authz
                                 .requestMatchers(mvc.pattern("/h2-console/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/"), mvc.pattern("/search")).hasAnyAuthority("ROLE_USER"
-                                        , "SCOPE_openid")
+                                        , "SCOPE_openid", "OAUTH2_USER")
                                 .requestMatchers(mvc.pattern("/**")).permitAll()
                 ).formLogin(
                         formLogin -> formLogin

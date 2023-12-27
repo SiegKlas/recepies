@@ -25,14 +25,12 @@ public class RecipesUser implements UserDetails {
     private Long id;
     private String password;
 
-    @ManyToMany
-    private List<Product> favouriteProducts = new ArrayList<>();
-
-    @ManyToMany
-    private List<Product> undesirableProducts = new ArrayList<>();
-
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Feedback> feedbacks = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Product> favouriteProducts = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Product> undesirableProducts = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
