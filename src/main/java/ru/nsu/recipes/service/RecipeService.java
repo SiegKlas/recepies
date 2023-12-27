@@ -23,7 +23,7 @@ public class RecipeService {
     }
 
     public List<Recipe> searchRecipesByName(String name) {
-        return recipeRepository.findByNameStartingWithIgnoreCase(name);
+        return recipeRepository.findByNameContainsIgnoreCase(name);
     }
 
     public Recipe getRecipeById(Long id) {

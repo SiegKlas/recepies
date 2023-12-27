@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recipes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .error-message {
+            color: #d8000c;
+            background-color: #ffbaba;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .login-form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: block;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .social-login a {
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .social-login a:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+    <div th:if="${loginError}">
+        <p class="error-message" th:text="${loginError}"></p>
+    </div>
+    <form class="login-form" id="loginForm" method="POST" th:action="@{/login}">
+        <label for="username">Username: </label>
+        <input id="username" name="username" required type="text"/>
+        <label for="password">Password: </label>
+        <input id="password" name="password" required type="password"/>
+        <input type="submit" value="Login"/>
+    </form>
+    <div class="social-login">
+        <a th:href="@{/oauth2/authorization/github}">Sign in with GitHub</a>
+        <a th:href="@{/oauth2/authorization/google}">Sign in with Google</a>
+    </div>
+    <div class="register-link">
+        Click
+        <a th:href="@{/register}">here</a> to register.
+    </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,14 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 90048155e13141cff85c
+            client-secret: 5728537f035fa81c6daa38f735b7196dd94b3bee
+          google:
+            client-id: 577229954163-p9scflikjtvt224pa6con4m53vd96ou4.apps.googleusercontent.com
+            client-secret: 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
   datasource:
     generate-unique-name: false
     name: recepies
