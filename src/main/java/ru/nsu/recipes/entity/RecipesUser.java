@@ -31,6 +31,9 @@ public class RecipesUser implements UserDetails {
     @ManyToMany
     private List<Product> undesirableProducts = new ArrayList<>();
 
+    @OneToMany
+    private final List<Feedback> feedbacks = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));

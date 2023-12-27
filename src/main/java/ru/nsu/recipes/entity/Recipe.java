@@ -1,12 +1,6 @@
 package ru.nsu.recipes.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +20,9 @@ public class Recipe {
 
     @Column(length = 10000)
     private String description;
+
+    @OneToMany
+    private final List<Feedback> feedbacks = new ArrayList<>();
 
     @ManyToMany
     private List<Product> products = new ArrayList<>();
