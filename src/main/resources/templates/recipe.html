@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 th:text="${recipe.name}">Название рецепта</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Описание</h3>
+            <p class="card-text" th:text="${recipe.description}"></p>
+
+            <h3 class="card-title">Ингредиенты</h3>
+            <ul class="list-group list-group-flush">
+                <li th:each="product : ${recipe.products}" th:text="${product.name}" class="list-group-item"></li>
+            </ul>
+        </div>
+    </div>
+
+    <a th:href="@{/}" class="btn btn-primary mt-3">Вернуть на главную</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

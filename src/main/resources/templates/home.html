@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Page</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<div class="container">
+    <h1 class="mt-4">Главная</h1>
+
+    <form th:action="@{/search}" method="get" class="mb-4">
+        <div class="form-row align-items-center">
+            <div class="col">
+                <input type="text" id="recipeName" name="recipeName" class="form-control" placeholder="Искать по имени рецепта">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Искать</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div th:each="recipe : ${recipes}" class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${recipe.name}"></h5>
+                    <p class="card-text"
+                       th:text="${#strings.length(recipe.description) > 200 ? #strings.substring(recipe.description, 0, 200) + '...' : recipe.description}"></p>
+                    <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Подключение внешнего файла скриптов Bootstrap (необходимо для некоторых компонентов) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
