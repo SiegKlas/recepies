@@ -11,9 +11,6 @@ public class CreateRecipeRequestDTO {
 
     private String description;
 
-    /**
-     * Тут очень жесткий костыль: id приходят
-     */
     private List<Long> ingredientIds;
 
 }

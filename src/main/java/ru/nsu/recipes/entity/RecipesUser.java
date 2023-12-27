@@ -1,6 +1,13 @@
 package ru.nsu.recipes.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,16 +26,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RecipesUser implements UserDetails {
 
-    private final String username;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    private final String username;
+
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final List<Feedback> feedbacks = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> favouriteProducts = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Product> undesirableProducts = new ArrayList<>();
 

@@ -18,7 +18,7 @@ public class HomeController {
 
     @GetMapping
     public String showRecipes(Model model) {
-        List<Recipe> recipes = recipeService.getAllRecipes();
+        List<Recipe> recipes = recipeService.getAllRecipesWithRegardsToUserDesires();
         model.addAttribute("recipes", recipes);
         return "home";
     }

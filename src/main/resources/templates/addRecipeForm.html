@@ -68,13 +68,10 @@
 
         ingredientSearch.addEventListener('input', function () {
             const query = ingredientSearch.value.toLowerCase();
-            // Здесь можно реализовать логику поиска ингредиентов (необходимо использовать Ajax для запроса на сервер)
-            // В данном примере просто генерируется некоторый список результатов.
             const results = allIngredients.filter(ingredient =>
                 ingredient.textContent.trim().toLowerCase().includes(query)
             );
 
-            // Очистка текущих результатов поиска
             searchResults.innerHTML = '';
 
             // Отображение результатов поиска

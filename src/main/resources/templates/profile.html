@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Профиль пользователя</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-3">
+    <h2>Профиль пользователя</h2>
+
+    <!-- Избранные продукты -->
+    <div class="mt-4">
+        <h3>Избранные продукты</h3>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="product : ${user.favouriteProducts}">
+                <span th:text="${product.name}">Название продукта</span>
+                <!-- Кнопка для удаления продукта из избранных, если нужно -->
+            </li>
+        </ul>
+    </div>
+
+    <!-- Форма для добавления избранных продуктов -->
+    <form class="form-inline mt-3" method="post" th:action="@{/profile/addFavorite}">
+        <div class="form-group mb-2">
+            <select class="form-control" name="productId">
+                <option th:each="product : ${allProducts}" th:text="${product.name}" th:value="${product.id}">Продукт
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary mb-2 ml-2" type="submit">Добавить в избранные</button>
+    </form>
+
+    <!-- Нежелательные продукты -->
+    <div class="mt-4">
+        <h3>Нежелательные продукты</h3>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="product : ${user.undesirableProducts}">
+                <span th:text="${product.name}">Название продукта</span>
+                <!-- Кнопка для удаления продукта из нежелательных, если нужно -->
+            </li>
+        </ul>
+    </div>
+
+    <!-- Форма для добавления нежелательных продуктов -->
+    <form class="form-inline mt-3" method="post" th:action="@{/profile/addUndesirable}">
+        <div class="form-group mb-2">
+            <select class="form-control" name="productId">
+                <option th:each="product : ${allProducts}" th:text="${product.name}" th:value="${product.id}">Продукт
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary mb-2 ml-2" type="submit">Добавить в нежелательные</button>
+    </form>
+
+    <a class="btn btn-primary mt-3" th:href="@{/}">Вернуться на главную</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
