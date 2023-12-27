@@ -7,37 +7,117 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
-<div class="container mt-4">
-    <h1>Добавить рецепт</h1>
-
-    <form th:action="@{/recipe/save}" method="post" th:object="${createRecipeRequestDTO}">
+<div class="container">
+    <h1>Add New Recipe</h1>
+    <form method="post" th:action="@{/recipe/save}" th:object="${createRecipeRequestDTO}">
         <div class="form-group">
-            <label for="recipeName">Название рецепта:</label>
-            <input type="text" id="recipeName" name="recipeName" class="form-control" required>
+            <label for="recipeName">Recipe Name:</label>
+            <input class="form-control" id="recipeName" name="name" required type="text">
         </div>
 
         <div class="form-group">
-            <label for="recipeDescription">Описание рецепта:</label>
-            <textarea id="recipeDescription" name="recipeDescription" class="form-control" rows="4" required></textarea>
+            <label for="recipeDescription">Description:</label>
+            <textarea class="form-control" id="recipeDescription" name="description" required rows="3"></textarea>
         </div>
 
+        <!-- Поле для поиска ингредиентов -->
         <div class="form-group">
-            <label for="recipeIngredients">Ингредиенты:</label>
-            <select id="recipeIngredients" name="recipeIngredients" class="form-control" multiple required>
-                <option th:each="ingredient : ${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.name}"></option>
-            </select>
+            <label for="ingredientSearch">Search Ingredients:</label>
+            <input class="form-control" id="ingredientSearch" placeholder="Search for ingredients..." type="text">
         </div>
 
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <!-- Скрытый список всех ингредиентов -->
+        <div id="allIngredients" style="display:none;">
+            <div th:each="ingredient : ${allIngredients}">
+                <div th:id="${ingredient.id}" th:text="${ingredient.name}"></div>
+            </div>
+        </div>
+
+        <!-- Список для отображения найденных ингредиентов -->
+        <div class="list-group" id="searchResults">
+            <!-- Здесь будут отображаться результаты поиска -->
+        </div>
+
+        <!-- Список уже добавленных ингредиентов -->
+        <div class="form-group">
+            <label>Added Ingredients:</label>
+            <ul class="list-group" id="selectedIngredients">
+                <!-- Здесь будут отображаться добавленные ингредиенты -->
+            </ul>
+
+            <input id="ingredientsAggregate" name="ingredientIds" type="hidden">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save Recipe</button>
     </form>
+</div>
 
-    <a href="/recipes" class="btn btn-secondary mt-3">Вернуть на главную</a>
+<a class="btn btn-secondary mt-3" th:href="@{/}">Вернуть на главную</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ingredientSearch = document.getElementById('ingredientSearch');
+        const searchResults = document.getElementById('searchResults');
+        const selectedIngredients = document.getElementById('selectedIngredients');
+        const ingredientIdsInput = document.getElementById('ingredientsAggregate');
+        const allIngredients = Array.from(document.getElementById('allIngredients').children);
+
+        ingredientSearch.addEventListener('input', function () {
+            const query = ingredientSearch.value.toLowerCase();
+            // Здесь можно реализовать логику поиска ингредиентов (необходимо использовать Ajax для запроса на сервер)
+            // В данном примере просто генерируется некоторый список результатов.
+            const results = allIngredients.filter(ingredient =>
+                ingredient.textContent.trim().toLowerCase().includes(query)
+            );
+
+            // Очистка текущих результатов поиска
+            searchResults.innerHTML = '';
+
+            // Отображение результатов поиска
+            results.forEach(result => {
+                const item = document.createElement('li');
+                item.textContent = result.textContent.trim();
+                item.classList.add('list-group-item');
+                item.addEventListener('click', function () {
+                    addIngredient(result);
+                    ingredientSearch.value = '';
+                    searchResults.innerHTML = '';
+                });
+                searchResults.appendChild(item);
+            });
+        });
+
+        function addIngredient(ingredient) {
+            const item = document.createElement('li');
+            item.textContent = ingredient.textContent.trim();
+            item.id = ingredient.children[0].id;
+            item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+            // Добавление кнопки удаления
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Remove';
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+            deleteButton.addEventListener('click', function () {
+                item.remove();
+                updateIngredientIds();
+            });
+
+            item.appendChild(deleteButton);
+            selectedIngredients.appendChild(item);
+            updateIngredientIds();
+        }
+
+        function updateIngredientIds() {
+            const ingredientItems = selectedIngredients.querySelectorAll('li');
+            const ingredientIds = Array.from(ingredientItems).map(item => item.id);
+            ingredientIdsInput.value = ingredientIds.join(',');
+        }
+    });
+</script>
 
 </body>
 </html>

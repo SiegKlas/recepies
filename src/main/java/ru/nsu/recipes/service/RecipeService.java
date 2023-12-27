@@ -32,10 +32,10 @@ public class RecipeService {
 
     public void saveRecipe(CreateRecipeRequestDTO createRecipeRequestDTO) {
         Recipe newRecipe = new Recipe();
-        newRecipe.setName(createRecipeRequestDTO.getRecipeName());
-        newRecipe.setDescription(createRecipeRequestDTO.getRecipeDescription());
+        newRecipe.setName(createRecipeRequestDTO.getName());
+        newRecipe.setDescription(createRecipeRequestDTO.getDescription());
 
-        List<Product> selectedIngredients = productRepository.findAllByIdIn(createRecipeRequestDTO.getProductIds());
+        List<Product> selectedIngredients = productRepository.findAllByIdIn(createRecipeRequestDTO.getIngredientIds());
         newRecipe.setProducts(selectedIngredients);
 
         recipeRepository.save(newRecipe);

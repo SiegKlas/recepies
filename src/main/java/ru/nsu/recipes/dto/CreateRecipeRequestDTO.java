@@ -7,10 +7,13 @@ import java.util.List;
 @Data
 public class CreateRecipeRequestDTO {
 
-    private String recipeName;
+    private String name;
 
-    private String recipeDescription;
+    private String description;
 
-    private List<Long> productIds;
+    /**
+     * Тут очень жесткий костыль: id приходят
+     */
+    private List<Long> ingredientIds;
 
 }

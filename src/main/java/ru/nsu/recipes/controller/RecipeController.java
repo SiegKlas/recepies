@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.nsu.recipes.dto.CreateRecipeRequestDTO;
 import ru.nsu.recipes.entity.Product;
 import ru.nsu.recipes.entity.Recipe;
@@ -40,7 +39,7 @@ public class RecipeController {
     public String showAddRecipeForm(Model model) {
         List<Product> ingredients = productService.getAllProducts();
 
-        model.addAttribute("ingredients", ingredients);
+        model.addAttribute("allIngredients", ingredients);
 
         model.addAttribute("createRecipeRequestDTO", new CreateRecipeRequestDTO());
 
@@ -51,7 +50,7 @@ public class RecipeController {
     public String saveRecipe(@ModelAttribute("recipeDto") CreateRecipeRequestDTO createRecipeRequestDTO) {
         recipeService.saveRecipe(createRecipeRequestDTO);
 
-        return "redirect:/recipes";
+        return "redirect:/";
     }
 
 }
