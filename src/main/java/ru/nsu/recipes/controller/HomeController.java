@@ -16,7 +16,7 @@ public class HomeController {
 
     private final RecipeService recipeService;
 
-    @GetMapping()
+    @GetMapping
     public String showRecipes(Model model) {
         List<Recipe> recipes = recipeService.getAllRecipes();
         model.addAttribute("recipes", recipes);
