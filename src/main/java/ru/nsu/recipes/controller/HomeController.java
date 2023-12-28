@@ -1,6 +1,7 @@
 package ru.nsu.recipes.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ public class HomeController {
     private final RecipeService recipeService;
 
     @GetMapping
-    public String showRecipes(Model model) {
-        List<Recipe> recipes = recipeService.getAllRecipesWithRegardsToUserDesires();
+    public String showRecipes(Model model, Authentication authentication) {
+        List<Recipe> recipes = recipeService.getAllRecipesWithRegardsToUserDesires(authentication);
         model.addAttribute("recipes", recipes);
         return "home";
     }

@@ -1,6 +1,7 @@
 package ru.nsu.recipes.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.nsu.recipes.dto.CreateRecipeRequestDTO;
 import ru.nsu.recipes.entity.Product;
@@ -8,6 +9,7 @@ import ru.nsu.recipes.entity.Recipe;
 import ru.nsu.recipes.entity.RecipesUser;
 import ru.nsu.recipes.repository.ProductRepository;
 import ru.nsu.recipes.repository.RecipeRepository;
+import ru.nsu.recipes.repository.RecipesUserRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,9 +22,11 @@ public class RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final ProductRepository productRepository;
+    private final RecipesUserRepository userRepository;
 
-    public List<Recipe> getAllRecipesWithRegardsToUserDesires() {
-        RecipesUser recipesUser = UserUtilsService.getCurrentUser();
+    public List<Recipe> getAllRecipesWithRegardsToUserDesires(Authentication authentication) {
+        RecipesUser recipesUser =
+                userRepository.findByUsername(UserUtilsService.getUsernameFromAuthentication(authentication));
 
         // все это нужно делать на стороне бд, но как-то в падлу..
         return recipeRepository.findAll().stream()
