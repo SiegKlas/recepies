@@ -37,15 +37,15 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/addFavorite")
-    public String addFavoriteProduct(@RequestParam Long productId) {
-        profileService.addFavouriteProduct(productId);
+    public String addFavoriteProduct(@RequestParam Long productId, Authentication authentication) {
+        profileService.addFavouriteProduct(productId, authentication);
 
         return "redirect:/profile";
     }
 
     @PostMapping("/profile/addUndesirable")
-    public String addUndesirableProduct(@RequestParam Long productId) {
-        profileService.addUndesirableProduct(productId);
+    public String addUndesirableProduct(@RequestParam Long productId, Authentication authentication) {
+        profileService.addUndesirableProduct(productId, authentication);
 
         return "redirect:/profile";
     }

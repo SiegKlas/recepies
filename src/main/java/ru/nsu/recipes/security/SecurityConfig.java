@@ -53,6 +53,7 @@ public class SecurityConfig {
                                 .requestMatchers(mvc.pattern("/h2-console/**")).permitAll()
                                 .requestMatchers(mvc.pattern("/"), mvc.pattern("/search")).hasAnyAuthority("ROLE_USER"
                                         , "SCOPE_openid", "OAUTH2_USER")
+                                .requestMatchers(mvc.pattern("/admin"), mvc.pattern("/admin/**")).hasRole("ADMIN")
                                 .requestMatchers(mvc.pattern("/**")).permitAll()
                 ).formLogin(
                         formLogin -> formLogin
